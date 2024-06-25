@@ -13,6 +13,7 @@ import {
   extractSubpath,
   sanitizeBakedContent,
   stripFirstBullet,
+  incrementHeadings,
 } from './util';
 
 const lineStartRE = /(?:^|\n) *$/;
@@ -102,9 +103,9 @@ export async function bake(
     }
 
     // Recurse and bake the linked file...
-    const baked = sanitizeBakedContent(
+    const baked = incrementHeadings(sanitizeBakedContent(
       await bake(app, linkedFile, subpath, newAncestors, settings)
-    );
+    ), settings.incrementHeadingLevels);
     replaceTarget(
       listMatch ? applyIndent(stripFirstBullet(baked), listMatch[1]) : baked
     );

@@ -83,6 +83,18 @@ export class BakeModal extends Modal {
         })
       );
 
+    new Setting(contentEl)
+      .setName("Increment heading levels")
+      .setDesc(
+          "Increase the heading levels of transcluded markdown files."
+      )
+      .addToggle((toggle) => 
+        toggle.setValue(settings.incrementHeadingLevels).onChange((value) => {
+          settings.incrementHeadingLevels = value;
+          plugin.saveSettings();
+        })
+      );
+
     new Setting(contentEl).setName('Output file name').then((setting) => {
       new Setting(contentEl).then((setting) => {
         setting.addButton((btn) =>

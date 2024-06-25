@@ -47,6 +47,11 @@ export function stripFrontmatter(text: string) {
   return text.replace(/^---[\s\S]+?\r?\n---(?:\r?\n\s*|$)/, '');
 }
 
+export function incrementHeadings(text: string, incrementHeadings: boolean) {
+  if (!text || !incrementHeadings) return text;
+  return text.replace(/^(#+)(\s)/gm, (match, hashes, space) => '#'.repeat(hashes.length + 1) + space);
+}
+
 export function sanitizeBakedContent(text: string) {
   return stripBlockId(stripFrontmatter(text));
 }
