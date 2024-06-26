@@ -48,5 +48,24 @@ export default class EasyBake extends Plugin {
         new BakeModal(this, file).open();
       },
     });
+
+    this.addCommand({
+      id: 'bake-file:saved-settings',
+      name: 'Bake current file using saved settings',
+      checkCallback: (checking) => {
+        // Current file
+        const file = this.activeMarkdownFile;
+        if (checking || !file) return !!file;
+        // Output file
+        let outputName = file.basename + '.baked';
+        let outputFolder = file.parent?.path || '';
+        if (outputFolder) outputFolder += '/';
+        // Bake
+        const inputPath = file.path;
+        const outputPath = outputFolder + outputName + '.md';
+        this.api.bakeAndOpen(inputPath, outputPath, this.settings)
+      },
+    });
+    
   }
 }
